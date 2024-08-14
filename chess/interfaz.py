@@ -21,7 +21,7 @@ class Juego:
         #self.tablero.mostrar_tablero()
         if self.mostrar_tablero: #para que cuando ejecute los tests del juego no se muestre el tablero
             self.tablero.mostrar_tablero()
-    def PonerPiezas(self): #Inicializa las piezas en sus respectivas posiciones y almacena las piezas en una lista para poder determinar el color ganador
+    def PonerPiezas(self): #inicializa las piezas en sus posiciones y alamacena las piezas en una lista para poder determinar el color ganador mas adelante
         #Blancas
         
         self.piezas.extend([
