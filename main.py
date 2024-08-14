@@ -1,0 +1,2 @@
+def chess():
+    return "Chess"
