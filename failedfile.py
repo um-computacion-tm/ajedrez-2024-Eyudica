@@ -24,5 +24,9 @@ def failedfile():
     print("w")
     print("x")
     print("y")
-    print("z")  
+    print("z")
+    for r in range(100):
+        for i in range(100):
+            for j in range(100):
+                print(r, i, j)
 failedfile()
