@@ -67,6 +67,6 @@ class TestPiezas(unittest.TestCase):
         self.assertEqual(self.Caballo.obtenerSimbolos(), '♘')
         self.assertEqual(self.Rey.obtenerSimbolos(), '♔')
         self.assertEqual(self.PeonNegro.obtenerSimbolos(), '♟')
-
+#
 if __name__ == '__main__':
     unittest.main()
