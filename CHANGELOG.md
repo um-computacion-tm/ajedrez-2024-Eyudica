@@ -8,6 +8,7 @@ Juego
 - Archivo `chess/tablero.py`
 - Archivo `chess/diccionarios.py`
 - Archivo `chess/piezas.py`
+- Archivo `chess/__init__.py`
 Tests
 - Archivo `tests/test_interfaz.py`
 - Archivo `tests/test_juego.py`
