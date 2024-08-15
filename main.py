@@ -1,2 +1,0 @@
-def chess():
-    return "Chess"
