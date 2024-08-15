@@ -1,6 +1,6 @@
 [run]
 source =
-    main
+    chess
     test
 omit =
     venv/*
