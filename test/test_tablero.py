@@ -18,13 +18,13 @@ class TestTablero(unittest.TestCase):
                 [" "," "," "," "," "," "," "," "],
                 [" "," "," "," "," "," "," "," "],
             ]
-        self.assertEqual(self.__tablero__.tablero,tablero)
+        self.assertEqual(self.__tablero__.__tablero__,tablero)
     #testea que el tablero inicialmente tiene espacios vacios
     def test_espacios(self):
-        self.assertEqual(self.__tablero__.tablero[0][0]," ")
-        self.assertEqual(self.__tablero__.tablero[7][7]," ")
+        self.assertEqual(self.__tablero__.__tablero__[0][0]," ")
+        self.assertEqual(self.__tablero__.__tablero__[7][7]," ")
 
-        self.assertNotEqual(self.__tablero__.tablero[4][5],"♟")
+        self.assertNotEqual(self.__tablero__.__tablero__[4][5],"♟")
     #para capturar la salida de la impresión del tablero y verificar que la estructura se muestra correctamente
     @patch('sys.stdout', new_callable=StringIO)
     def test_mostrar_tablero(self, mock_stdout): 
