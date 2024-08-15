@@ -1,4 +1,4 @@
-from interfaz import Juego
+from chess.interfaz import Juego
 import time
 CLEAR="\033[H\033[J"
 
