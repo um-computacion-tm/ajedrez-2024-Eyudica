@@ -37,10 +37,10 @@ class Piezas():
         columna_anterior = self.__columna__
         fila_anterior = self.__fila__
         self.__columna__,self.__fila__  = self.establecerPosicion(self.__posicion__) 
-        posicion_actual = tablero.tablero[self.__columna__][self.__fila__]
+        posicion_actual = tablero.__tablero__[self.__columna__][self.__fila__]
         if  posicion_actual not in simbolos[self.__color__].values(): 
-            tablero.tablero[columna_anterior][fila_anterior] = " "
-            tablero.tablero[self.__columna__][self.__fila__] = self.__simbolo__
+            tablero.__tablero__[columna_anterior][fila_anterior] = " "
+            tablero.__tablero__[self.__columna__][self.__fila__] = self.__simbolo__
             return True
         elif posicion_actual == self.__simbolo__: 
             #print(f"Ya tenes un {self.__tipo__}({simbolos[self.__color__][self.__tipo__]}) en {self.__posicion__}")
@@ -75,15 +75,15 @@ class Peon(Piezas):
     def checkMovimiento(self,nueva_posicion,tablero): #determina los distintos movimientos permitidos del peon con condicionales
         nueva_columna, nueva_fila =  self.establecerPosicion(nueva_posicion) 
         direccion=1 if self.__color__==BLANCO else -1
-        if nueva_columna==self.__columna__ and nueva_fila==self.__fila__+direccion and tablero.tablero[nueva_columna][nueva_fila]==" ": #avanzar linealmente
+        if nueva_columna==self.__columna__ and nueva_fila==self.__fila__+direccion and tablero.__tablero__[nueva_columna][nueva_fila]==" ": #avanzar linealmente
             self.__movido__=True
             return True
         if (nueva_columna==self.__columna__+1 or nueva_columna==self.__columna__-1) \
-            and nueva_fila==self.__fila__+direccion and tablero.tablero[nueva_columna][nueva_fila]!=" ": #comer en diagonal   
+            and nueva_fila==self.__fila__+direccion and tablero.__tablero__[nueva_columna][nueva_fila]!=" ": #comer en diagonal   
             self.__movido__=True
             return True
         fila_doble_avance=self.__fila__+(2*direccion)
-        if not self.__movido__ and nueva_columna==self.__columna__ and nueva_fila==fila_doble_avance and tablero.tablero[nueva_columna][nueva_fila]==" ":#doble avance
+        if not self.__movido__ and nueva_columna==self.__columna__ and nueva_fila==fila_doble_avance and tablero.__tablero__[nueva_columna][nueva_fila]==" ":#doble avance
             self.__movido__=True
             return True
         return False
@@ -103,14 +103,14 @@ class Torre(Piezas):
         #     return False
         if nueva_columna==self.__columna__ and nueva_fila!=self.__fila__: #avanzar horizontalmente 
             for i in range(inicio_fila, fin_fila):
-                if tablero.tablero[self.__columna__][i]!=" ":
+                if tablero.__tablero__[self.__columna__][i]!=" ":
                     return False
             return True
         if nueva_fila==self.__fila__ and nueva_columna!=self.__columna__: #avanzar verticalmente
             incio_columna = min(self.__columna__, nueva_columna) + 1
             fin_columna = max(self.__columna__, nueva_columna)
             for i in range(incio_columna,fin_columna): #para las filas
-                if tablero.tablero[i][self.__fila__]!=" ":
+                if tablero.__tablero__[i][self.__fila__]!=" ":
                     return False
             return True             
         return False
@@ -139,7 +139,7 @@ class Alfil(Piezas):
         columna_actual=self.__columna__ + direccion_columnna
         fila_actual=self.__fila__ + direccion_fila
         while (columna_actual!=nueva_columna) and (fila_actual!=nueva_fila):
-            if tablero.tablero[columna_actual][fila_actual]!=" ": #va iterando por cada posicion entre la actual y la final por si hay alguna pieza bloqueando el camino del alfil
+            if tablero.__tablero__[columna_actual][fila_actual]!=" ": #va iterando por cada posicion entre la actual y la final por si hay alguna pieza bloqueando el camino del alfil
                 #print("No es posible mover la pieza, hay una pieza bloqueando el camino")
                 return False
             columna_actual+=direccion_columnna

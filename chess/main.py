@@ -6,15 +6,15 @@ def main(): #Calcula el tiempo total de la partida y usa CLEAR para limpiar la p
     inicio=time.time()
     print(CLEAR)
     juego=Juego() 
-    while not juego.juego_finalizado:
-        if  juego.juego_finalizado:
+    while not juego.__juego_finalizado__:
+        if  juego.__juego_finalizado__:
             pass
         else:
             juego.turnos()
             print(CLEAR)
-            juego.tablero.mostrar_tablero()
+            juego.__tablero__.mostrar_tablero()
     print(CLEAR)        
-    juego.tablero.mostrar_tablero()               
+    juego.__tablero__.mostrar_tablero()               
     print(f"El ganador es {juego.ganador}")
     fin=time.time()
     total=fin-inicio
