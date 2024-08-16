@@ -99,22 +99,24 @@ class Torre(Piezas):
         nueva_columna, nueva_fila =  self.establecerPosicion(nueva_posicion)
         inicio_fila = min(self.__fila__, nueva_fila) + 1; #para calcular  a partir de la proxima casilla
         fin_fila = max(self.__fila__, nueva_fila)
+        movimiento_valido=False
         # if nueva_columna!=self.__columna__ and nueva_fila!=self.__fila__: #bloquear el movimiento diagonal
         #     return False
         if nueva_columna==self.__columna__ and nueva_fila!=self.__fila__: #avanzar horizontalmente 
+            movimiento_valido=True
             for i in range(inicio_fila, fin_fila):
                 if tablero.__tablero__[self.__columna__][i]!=" ":
-                    return False
-            return True
+                    movimiento_valido=False
+                    break
         if nueva_fila==self.__fila__ and nueva_columna!=self.__columna__: #avanzar verticalmente
+            movimiento_valido=True
             incio_columna = min(self.__columna__, nueva_columna) + 1
             fin_columna = max(self.__columna__, nueva_columna)
             for i in range(incio_columna,fin_columna): #para las filas
                 if tablero.__tablero__[i][self.__fila__]!=" ":
-                    return False
-            return True             
-        return False
-
+                    movimiento_valido=False
+                    break
+        return movimiento_valido
 
 class Alfil(Piezas):
     def __init__(self, color, posicion,tablero):
