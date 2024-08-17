@@ -6,6 +6,7 @@ class TestJuego(unittest.TestCase):
 
     def setUp(self):
         self.__juego__ = Juego(mostrar_tablero=False)
+        self.__tablero__=self.__juego__.__tablero__
     #testea que el juego inicia correctamente, que el turno actual es el de blanco y que hayan 32 piezas
     def test_inicio(self):
         self.assertEqual(self.__juego__.__turno_actual__, BLANCO)
@@ -53,8 +54,28 @@ class TestJuego(unittest.TestCase):
     def test_turnos_juego_no_finalizado(self, mock_input):
         self.__juego__.__juego_finalizado__ = False
         self.__juego__.turnos()
-        self.assertEqual(self.__juego__.__contador_jugadas__, 1)
-
+        self.assertEqual(self.__juego__.__contador_jugadas__, 0)
+    @patch('builtins.input', return_value="e2 e4")
+    def test_turnos_juego_no_finalizado(self, mock_input):
+        self.__juego__.__juego_finalizado__ = False
+        self.__juego__.turnos()
+        self.assertEqual(self.__juego__.__contador_jugadas__, 0)
+    @patch('builtins.input', return_value="e2 e4")
+    def test_turnos_juego_finalizado(self, mock_input):
+        self.assertEqual(self.__juego__.obtenerCoordenadas(), ("e2", "e4"))
+    def test_determinar_ganador_negro(self):
+        for i in range(8):
+            for x in range(2):
+                self.__tablero__.__tablero__[i][x]=" "
+        self.assertTrue(self.__juego__.determinarGanador())
+        self.assertEqual(self.__juego__.__ganador__, NEGRO)
+    def test_determinar_ganador_blanco(self):
+        for i in range(8):
+            for x in range(6,8):
+                self.__tablero__.__tablero__[i][x]=" "
+        self.__tablero__.__tablero__[0][0]="♙"
+        self.assertTrue(self.__juego__.determinarGanador())
+        self.assertEqual(self.__juego__.__ganador__, BLANCO)
 
 
 if __name__ == '__main__':
