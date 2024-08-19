@@ -43,7 +43,6 @@ class Piezas():
             tablero.__tablero__[self.__columna__][self.__fila__] = self.__simbolo__
             return True
         elif posicion_actual == self.__simbolo__: 
-            #print(f"Ya tenes un {self.__tipo__}({simbolos[self.__color__][self.__tipo__]}) en {self.__posicion__}")
             self.__columna__, self.__fila__ = columna_anterior, fila_anterior
             return False
         else:
@@ -88,8 +87,6 @@ class Peon(Piezas):
             return True
         return False
 
-
- 
 class Torre(Piezas):
     def __init__(self, color, posicion,tablero):
         super().__init__("Torre", color, posicion,tablero)
@@ -100,8 +97,6 @@ class Torre(Piezas):
         inicio_fila = min(self.__fila__, nueva_fila) + 1; #para calcular  a partir de la proxima casilla
         fin_fila = max(self.__fila__, nueva_fila)
         movimiento_valido=False
-        # if nueva_columna!=self.__columna__ and nueva_fila!=self.__fila__: #bloquear el movimiento diagonal
-        #     return False
         if nueva_columna==self.__columna__ and nueva_fila!=self.__fila__: #avanzar horizontalmente 
             movimiento_valido=True
             for i in range(inicio_fila, fin_fila):
@@ -130,7 +125,6 @@ class Alfil(Piezas):
                 return True
             return False
         else:
-            #print("El movimiento no es diagonal")
             return False
       
     def calcularPosicionDiagonal(self,nueva_posicion,tablero): #comprueba si esta disponible el movimiento, mueve la pieza y llamo a insertarentablero
@@ -142,7 +136,6 @@ class Alfil(Piezas):
         fila_actual=self.__fila__ + direccion_fila
         while (columna_actual!=nueva_columna) and (fila_actual!=nueva_fila):
             if tablero.__tablero__[columna_actual][fila_actual]!=" ": #va iterando por cada posicion entre la actual y la final por si hay alguna pieza bloqueando el camino del alfil
-                #print("No es posible mover la pieza, hay una pieza bloqueando el camino")
                 return False
             columna_actual+=direccion_columnna
             fila_actual+=direccion_fila
@@ -155,9 +148,9 @@ class Dama(Piezas):
 
     def checkMovimiento(self, nueva_posicion, tablero): #crea las instancias de torre y alfil, con la posicion y color de la dama. Esto esta para que la dama pueda replicar sus movimientos
         
-        self.Torre_moves = Torre(self.__color__, self.__posicion__,tablero)
-        self.Alfil_moves = Alfil(self.__color__, self.__posicion__,tablero)
-        return self.Torre_moves.checkMovimiento(nueva_posicion, tablero) or self.Alfil_moves.checkMovimiento(nueva_posicion, tablero)
+        self.Torre_movimiento = Torre(self.__color__, self.__posicion__,tablero)
+        self.Alfil_movimiento = Alfil(self.__color__, self.__posicion__,tablero)
+        return self.Torre_movimiento.checkMovimiento(nueva_posicion, tablero) or self.Alfil_movimiento.checkMovimiento(nueva_posicion, tablero)
         #Si agluno de los movimientos es True, se cumple la condicion del metodo mover de piezas, entonces usa el metodo de la pieza respectiva pero con los atributos de la dama
 class Caballo(Piezas):
     def __init__(self, color, posicion,tablero):
@@ -176,7 +169,6 @@ class Caballo(Piezas):
 class Rey(Piezas):
     def __init__(self, color, posicion,tablero):
         super().__init__("Rey", color, posicion,tablero)
-    
     def checkMovimiento(self, nueva_posicion, tablero):#Lo mismo que con el caballo solo que separe las distintas combinaciones dependiendo del tipo de movimiento para mayor legibilidad
         nueva_columna, nueva_fila =  self.establecerPosicion(nueva_posicion)
         posibles_movimientos_lineales=((self.__columna__-1,self.__fila__),(self.__columna__+1,self.__fila__),(self.__columna__,self.__fila__+1),(self.__columna__,self.__fila__-1))   
