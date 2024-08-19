@@ -18,7 +18,7 @@
 - Archivo `.codeclimate.yml`
 - Archivo `.coveragerc`
 ## [1.1.0] - 2024-08-14
-###  Agregado
+###  Agregado       
 Juego
 - Archivo `chess/main.py`
 - Archivo `chess/interfaz.py`
