@@ -155,9 +155,9 @@ class Dama(Piezas):
 
     def checkMovimiento(self, nueva_posicion, tablero): #crea las instancias de torre y alfil, con la posicion y color de la dama. Esto esta para que la dama pueda replicar sus movimientos
         
-        self.Torre_moves = Torre(self.__color__, self.__posicion__,tablero)
-        self.Alfil_moves = Alfil(self.__color__, self.__posicion__,tablero)
-        return self.Torre_moves.checkMovimiento(nueva_posicion, tablero) or self.Alfil_moves.checkMovimiento(nueva_posicion, tablero)
+        self.Torre_movimiento = Torre(self.__color__, self.__posicion__,tablero)
+        self.Alfil_movimiento = Alfil(self.__color__, self.__posicion__,tablero)
+        return self.Torre_movimiento.checkMovimiento(nueva_posicion, tablero) or self.Alfil_movimiento.checkMovimiento(nueva_posicion, tablero)
         #Si agluno de los movimientos es True, se cumple la condicion del metodo mover de piezas, entonces usa el metodo de la pieza respectiva pero con los atributos de la dama
 class Caballo(Piezas):
     def __init__(self, color, posicion,tablero):

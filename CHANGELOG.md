@@ -1,4 +1,8 @@
 # CHANGELOG
+## [1.2.1] - 2024-08-19
+### Actualizar
+- Archivo `test/test_interfaz.py`
+- Archivo `chess/piezas.py`
 ## [1.2.0] - 2024-08-17
 ### Arreglar/Actualizar
 - Archivo `chess/interfaz.py`
@@ -18,7 +22,7 @@
 - Archivo `.codeclimate.yml`
 - Archivo `.coveragerc`
 ## [1.1.0] - 2024-08-14
-###  Agregado
+###  Agregado       
 Juego
 - Archivo `chess/main.py`
 - Archivo `chess/interfaz.py`
