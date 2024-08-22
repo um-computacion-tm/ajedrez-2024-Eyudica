@@ -1,4 +1,9 @@
 # CHANGELOG
+## [1.3.0] - 2024-08-22
+### Arreglar
+- Archivo `chess/piezas.py`
+- Archivo `chess/tablero.py`
+
 ## [1.2.1] - 2024-08-19
 ### Actualizar
 - Archivo `test/test_interfaz.py`
