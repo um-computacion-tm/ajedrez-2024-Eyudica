@@ -1,7 +1,4 @@
-from diccionarios import diccionarioSimbolos as simbolos
-from diccionarios import diccionarioFilas
-#from tablero import Tablero
-#Global vars
+
 BLANCO='Blanco'
 NEGRO='Negro'
 class Piezas():
@@ -27,7 +24,7 @@ class Piezas():
     @property
     def simbolo(self):
         return self.__simbolo__
-    def obtenerSimbolos(self): #Entra en el diccionario de simbolos para obtener basandose en el color y el tipo de pieza
+    def obtenerSimbolos(self):
         return simbolos[self.__color__][self.__tipo__]
     @property
     def columna_anterior(self):
@@ -35,14 +32,22 @@ class Piezas():
     @property
     def fila_anterior(self):
         return self.__fila_anterior__
+    #--------------------------------------------------------------------
+    @fila_anterior.setter
+    def fila_anterior(self, value):
+        self.__fila_anterior__ = value
+    @columna_anterior.setter
+    def columna_anterior(self, value):
+        self.__columna_anterior__ = value
+    @fila.setter
+    def fila(self, value):
+        self.__fila__ = value
+    @columna.setter
+    def columna(self, value):
+        self.__columna__ = value
     def establecerPosicion(self, nueva_posicion): #Recibe como parametro las coordenadas de la nueva posicion de la pieza, convierte el primer valor de las coordenadas(columnas) a letras como el estandar usado en el ajedrez
-        self.__columna_anterior__ = self.columna
-        self.__fila_anterior__ =self.fila
-        self.__posicion__ = nueva_posicion
-        columna = nueva_posicion[0]
-        fila = int(nueva_posicion[1]) - 1
-        
-        return columna, fila
+        self.columna_anterior, self.fila_anterior = self.__posicion__
+        self.__posicion__=nueva_posicion
     def __str__(self):
         return f'La pieza es {self.__tipo__} con color {self.__color__} en la posicion {(self.columna,self.fila)} y el simbolo es {self.__simbolo__}'
 
@@ -53,38 +58,58 @@ class Peon(Piezas):
     def checkMovimiento(self,nueva_posicion): #determina los distintos movimientos permitidos del peon con condicionales
         nueva_columna, nueva_fila =  nueva_posicion
         direccion=1 if self.__color__==BLANCO else -1
+        casillas=[]
         if nueva_columna==self.columna and nueva_fila==self.fila+direccion: #avanzar linealmente
-            return True
+            casillas.append((self.columna,self.fila+direccion))
         if (nueva_columna==self.columna+1 or nueva_columna==self.columna-1) and nueva_fila==self.fila+direccion: #comer en diagonal   
-            return True
+            casillas.append((self.columna+direccion,self.fila+direccion))
         fila_doble_avance=self.fila+(2*direccion)
         if not self.__movido__ and nueva_columna==self.columna and nueva_fila==fila_doble_avance :#doble avance
-            return True
-        return False
+            casillas.append((self.columna,fila_doble_avance))
+        return casillas
 
 
 class Torre(Piezas):
     def __init__(self, color, posicion):
         super().__init__("Torre", color, posicion)
-    def checkMovimiento(self,nueva_posicion): 
-        nueva_columna, nueva_fila =  nueva_posicion
-        inicio_fila = min(self.fila, nueva_fila) + 1; #para calcular  a partir de la proxima casilla
-        fin_fila = max(self.fila, nueva_fila)
-        if nueva_columna!=self.columna and nueva_fila!=self.fila: #bloquear el movimiento diagonal
+    def checkMovimiento(self, nueva_posicion):
+        nueva_columna, nueva_fila = nueva_posicion
+        if nueva_columna != self.columna and nueva_fila != self.fila:  #bloquear el movimiento diagonal
             return False
-        return True
+        casillas = []
+        if nueva_columna == self.columna:
+            inicio_fila = min(self.fila, nueva_fila)
+            fin_fila = max(self.fila, nueva_fila)
+            for i in range(inicio_fila, fin_fila + 1):
+                if i != self.fila:  
+                    casillas.append((self.columna, i))
+        elif nueva_fila == self.fila:
+            inicio_columna = min(self.columna, nueva_columna)
+            fin_columna = max(self.columna, nueva_columna)
+            for i in range(inicio_columna, fin_columna + 1):
+                if i != self.columna: 
+                    casillas.append((i, self.fila))
+        return casillas
 
 class Alfil(Piezas):
     def __init__(self, color, posicion):
         super().__init__("Alfil", color, posicion)
     def checkMovimiento(self,nueva_posicion): #comprueba que el movimiento sea diagonal
+        casillas=[]
         nueva_columna, nueva_fila =  nueva_posicion
-        diferencia_columnas=abs(self.columna-nueva_columna) 
-        diferencia_filas=abs(self.fila-nueva_fila)
-        if diferencia_columnas==diferencia_filas:# al ser un movimiento diagonal, la diferencia de columnas y filas debe ser igual
-                return True
-        return False
-    
+        
+        direccion_columna=1 if self.columna<nueva_columna else -1
+        direccion_fila=1 if self.fila<nueva_fila else -1
+        if abs(self.columna-nueva_columna)==abs(self.fila-nueva_fila):
+            columna_actual=self.columna+direccion_columna
+            fila_actual=self.fila+direccion_fila
+            while (columna_actual!=nueva_columna) and (fila_actual!=nueva_fila):
+                casillas.append((columna_actual,fila_actual))
+                columna_actual+=direccion_columna
+                fila_actual+=direccion_fila
+            casillas.append((columna_actual,fila_actual))
+        return casillas
+        
 class Dama(Piezas):
     def __init__(self, color, posicion):
         super().__init__("Dama", color, posicion)
