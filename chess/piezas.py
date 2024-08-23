@@ -1,4 +1,5 @@
-
+from diccionarios import diccionarioSimbolos as simbolos
+from diccionarios import diccionarioFilas
 BLANCO='Blanco'
 NEGRO='Negro'
 class Piezas():
@@ -65,6 +66,7 @@ class Peon(Piezas):
             casillas.append((self.columna+direccion,self.fila+direccion))
         fila_doble_avance=self.fila+(2*direccion)
         if not self.__movido__ and nueva_columna==self.columna and nueva_fila==fila_doble_avance :#doble avance
+            casillas.append((self.columna+(nueva_columna-self.columna),self.fila+direccion))
             casillas.append((self.columna,fila_doble_avance))
         return casillas
 
@@ -127,21 +129,23 @@ class Caballo(Piezas):
         nueva_columna, nueva_fila =  nueva_posicion
         col_actual=self.columna
         fila_actual=self.fila
-        posibles_movimientos=((col_actual-2,fila_actual-1),(col_actual-2,fila_actual+1),(col_actual+1,fila_actual+2),(col_actual-1,fila_actual+2),(col_actual+2,\
-        fila_actual+1),(col_actual+2,fila_actual-1),(col_actual+1,fila_actual-2),(col_actual-1,fila_actual-2)) #posibles movimientos a partir de la posicio actual
-        if (nueva_columna,nueva_fila) in posibles_movimientos:
+        movimiento_columna = abs(nueva_columna - col_actual)
+        movimiento_fila = abs(nueva_fila - fila_actual)
+        if (movimiento_columna == 2 and movimiento_fila == 1) or (movimiento_columna == 1 and movimiento_fila == 2):
             return True
         return False
-   
 class Rey(Piezas):
     def __init__(self, color, posicion):
         super().__init__("Rey", color, posicion)
     
     def checkMovimiento(self, nueva_posicion, ):#Lo mismo que con el caballo solo que separe las distintas combinaciones dependiendo del tipo de movimiento para mayor legibilidad
         nueva_columna, nueva_fila =  nueva_posicion
-        posibles_movimientos_lineales=((self.columna-1,self.fila),(self.columna+1,self.fila),(self.columna,self.fila+1),(self.columna,self.fila-1))   
-        posibles_movimientos_diagonales=((self.columna-1,self.fila+1),(self.columna+1,self.fila-1),(self.columna+1,self.fila+1),(self.columna-1,self.fila-1))
-        if (nueva_columna,nueva_fila)  in (posibles_movimientos_lineales + posibles_movimientos_diagonales):
+        col_actual=self.columna
+        fila_actual=self.fila
+        movimiento_columna = abs(nueva_columna - col_actual)
+        movimiento_fila = abs(nueva_fila - fila_actual)
+
+        if movimiento_columna <= 1 and movimiento_fila <= 1:
             return True
         return False
 # rey=Rey(BLANCO,(3,3))
