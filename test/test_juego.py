@@ -56,16 +56,33 @@ class TestJuego(unittest.TestCase):
         self.__juego__.turnos()
         self.assertEqual(self.__juego__.__contador_jugadas__, 0)
 
+<<<<<<< HEAD
     @patch('builtins.input', return_value="e2 e4") #testea el funcionamiento de obeterCoordenadas
     def test_turnos_juego_finalizado(self, mock_input):
         self.assertEqual(self.__juego__.obtenerCoordenadas(), ("e2", "e4"))
     def test_determinar_ganador_negro(self): #simula que gana el negro y testea que el ganador sea el negro
+=======
+
+    @patch('builtins.input', return_value="e2 e4") #prueba que contador de jugadas sea 0 
+    def test_turnos_juego_no_finalizado(self, mock_input):
+        self.__juego__.__juego_finalizado__ = False
+        self.__juego__.turnos()
+        self.assertEqual(self.__juego__.__contador_jugadas__, 0)
+    @patch('builtins.input', return_value="e2 e4") #prueba que obtenerCoordenadas funcione correctamente
+    def test_turnos_juego_finalizado(self, mock_input):
+        self.assertEqual(self.__juego__.obtenerCoordenadas(), ("e2", "e4"))
+    def test_determinar_ganador_negro(self): #simula que no hay piezas de blanco y se fija que el ganador es negro
+>>>>>>> 21546ad660191d52356b8d31acbe277637f542a6
         for i in range(8):
             for x in range(2):
                 self.__tablero__.__tablero__[i][x]=" "
         self.assertTrue(self.__juego__.determinarGanador())
         self.assertEqual(self.__juego__.__ganador__, NEGRO)
+<<<<<<< HEAD
     def test_determinar_ganador_blanco(self): #simula que gana el blanco y testea que el  ganador sea el blanco
+=======
+    def test_determinar_ganador_blanco(self): #simula que no hay piezas de negro y se fija que el ganador es blanco
+>>>>>>> 21546ad660191d52356b8d31acbe277637f542a6
         for i in range(8):
             for x in range(6,8):
                 self.__tablero__.__tablero__[i][x]=" "
