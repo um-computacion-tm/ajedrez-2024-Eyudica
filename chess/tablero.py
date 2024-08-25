@@ -46,8 +46,8 @@ class Tablero:
         columna_final, fila_final = nueva_posicion
        # casilla_final_simbolo=self.__tablero__[columna_final][fila_final]
         
-        if pieza.checkMovimiento(nueva_posicion):
-            if self.checkearColisiones(pieza,nueva_posicion):
+        if self.checkearColisiones(pieza,nueva_posicion):
+       #     if self.checkearColisiones(pieza,nueva_posicion):
                 self.__tablero__[columna_inicial][fila_inicial] = " "
                 self.__tablero__[columna_final][fila_final] = pieza.simbolo
                 pieza.establecerPosicion((columna_final, fila_final))
@@ -56,8 +56,35 @@ class Tablero:
             pieza.establecerPosicion((columna_inicial, fila_inicial))
             return False
 
-    def checkCamino(self, camino):
-        for columna, fila in camino[0:-1]:
-            if self.__tablero__[columna][fila] != " ":
-                return False
-        return True
+    def checkCamino(self, pieza, camino):
+        if isinstance(pieza, Peon):
+            if len(camino) == 1:
+                columna, fila = camino[0]
+                avance_lineal = (columna == pieza.columna)
+                return (self.__tablero__[columna][fila]==" ") if avance_lineal else (self.__tablero__[columna][fila] !=" ")
+            elif len(camino) == 2:#si el movimiento es recto y esta libre    #para la diagonal
+                     
+                return all(self.__tablero__[columna][fila] == " " for columna, fila in camino)
+            return False
+        elif isinstance(pieza, (Alfil,Dama,Torre)):
+            return all(self.__tablero__[columna][fila] == " " for columna, fila in camino[:-1])
+        else:
+            return True
+
+
+    def determinarGanador(self):#itera sobre todas las posiciones del tablero, y si no hay piezas de un color, se da como ganador el otro color
+        piezas_blanco = False
+        piezas_negro = False
+    
+        for x in range(8):
+            for y in range(8):
+                pieza = self.__tablero__[x][y]
+                if pieza in simbolos[BLANCO].values():
+                    piezas_blanco = True
+                elif pieza in simbolos[NEGRO].values():
+                    piezas_negro = True
+        if not piezas_negro:
+            return NEGRO
+        elif not piezas_blanco:
+            return NEGRO
+        return None
