@@ -70,21 +70,3 @@ class Tablero:
             return all(self.__tablero__[columna][fila] == " " for columna, fila in camino[:-1])
         else:
             return True
-
-
-    def determinarGanador(self):#itera sobre todas las posiciones del tablero, y si no hay piezas de un color, se da como ganador el otro color
-        piezas_blanco = False
-        piezas_negro = False
-    
-        for x in range(8):
-            for y in range(8):
-                pieza = self.__tablero__[x][y]
-                if pieza in simbolos[BLANCO].values():
-                    piezas_blanco = True
-                elif pieza in simbolos[NEGRO].values():
-                    piezas_negro = True
-        if not piezas_negro:
-            return NEGRO
-        elif not piezas_blanco:
-            return NEGRO
-        return None
