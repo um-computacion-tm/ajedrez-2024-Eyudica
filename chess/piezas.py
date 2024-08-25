@@ -49,8 +49,8 @@ class Piezas():
     def establecerPosicion(self, nueva_posicion): #Recibe como parametro las coordenadas de la nueva posicion de la pieza, convierte el primer valor de las coordenadas(columnas) a letras como el estandar usado en el ajedrez
         self.columna_anterior, self.fila_anterior = self.__posicion__
         self.__posicion__=nueva_posicion
-    def __str__(self):
-        return f'La pieza es {self.__tipo__} con color {self.__color__} en la posicion {(self.columna,self.fila)} y el simbolo es {self.__simbolo__}'
+    #def __str__(self):
+    #    return f'La pieza es {self.__tipo__} con color {self.__color__} en la posicion {(self.columna,self.fila)} y el simbolo es {self.__simbolo__}'
 
 class Peon(Piezas):
     def __init__(self, color, posicion):
@@ -62,8 +62,9 @@ class Peon(Piezas):
         casillas=[]
         if nueva_columna==self.columna and nueva_fila==self.fila+direccion: #avanzar linealmente
             casillas.append((self.columna,self.fila+direccion))
-        if (nueva_columna==self.columna+1 or nueva_columna==self.columna-1) and nueva_fila==self.fila+direccion: #comer en diagonal   
-            casillas.append((self.columna+direccion,self.fila+direccion))
+        if (nueva_columna == self.columna + direccion or nueva_columna == self.columna - direccion) and nueva_fila == self.fila + direccion:
+            casillas.append((nueva_columna, nueva_fila))
+
         fila_doble_avance=self.fila+(2*direccion)
         if not self.__movido__ and nueva_columna==self.columna and nueva_fila==fila_doble_avance :#doble avance
             casillas.append((self.columna+(nueva_columna-self.columna),self.fila+direccion))
@@ -76,9 +77,10 @@ class Torre(Piezas):
         super().__init__("Torre", color, posicion)
     def checkMovimiento(self, nueva_posicion):
         nueva_columna, nueva_fila = nueva_posicion
-        if nueva_columna != self.columna and nueva_fila != self.fila:  #bloquear el movimiento diagonal
-            return False
         casillas = []
+        #if nueva_columna != self.columna and nueva_fila != self.fila:  #bloquear el movimiento diagonal
+        #    return False
+        
         if nueva_columna == self.columna:
             inicio_fila = min(self.fila, nueva_fila)
             fin_fila = max(self.fila, nueva_fila)
@@ -91,6 +93,7 @@ class Torre(Piezas):
             for i in range(inicio_columna, fin_columna + 1):
                 if i != self.columna: 
                     casillas.append((i, self.fila))
+        #casillas.append((self.columna, self.fila))
         return casillas
 
 class Alfil(Piezas):
@@ -116,11 +119,15 @@ class Dama(Piezas):
     def __init__(self, color, posicion):
         super().__init__("Dama", color, posicion)
 
-    def checkMovimiento(self, nueva_posicion): #crea las instancias de torre y alfil, con la posicion y color de la dama. Esto esta para que la dama pueda replicar sus movimientos
-        
-        self.Torre_movimiento = Torre(self.__color__, self.__posicion__)
-        self.Alfil_movimiento = Alfil(self.__color__, self.__posicion__)
-        return self.Torre_movimiento.checkMovimiento(nueva_posicion) or self.Alfil_movimiento.checkMovimiento(nueva_posicion)
+    def checkMovimiento(self, nueva_posicion):
+        movimiento_como_torre = Torre(self.color, self.__posicion__).checkMovimiento(nueva_posicion)
+        movimiento_como_alfil = Alfil(self.color, self.__posicion__).checkMovimiento(nueva_posicion)
+
+        if movimiento_como_torre or movimiento_como_alfil:
+            return movimiento_como_torre + movimiento_como_alfil
+        else:
+            return []
+
 class Caballo(Piezas):
     def __init__(self, color, posicion):
         super().__init__("Caballo", color, posicion)
@@ -148,5 +155,3 @@ class Rey(Piezas):
         if movimiento_columna <= 1 and movimiento_fila <= 1:
             return True
         return False
-# rey=Rey(BLANCO,(3,3))
-# print(rey.checkMovimiento((5,3)))
