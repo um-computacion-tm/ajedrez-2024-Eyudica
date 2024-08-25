@@ -1,22 +1,37 @@
-from chess.interfaz import Juego
+from interfaz import Juego
+from tablero import Tablero
 import time
-CLEAR="\033[H\033[J"
+CLEAR = "\033[H\033[J"
 
-def main(): #Calcula el tiempo total de la partida y usa CLEAR para limpiar la pantalla, una vez que juego_finalizado de juego sea true termina la ejecucion y muestra el tiempo total de partida
-    inicio=time.time()
-    print(CLEAR)
-    juego=Juego() 
+def main():
+    juego = Juego()
+    tablero = Tablero()
+    inicio = time.time()
+
+    juego.inicializarPiezas()
+    juego.agregarPiezasEnTablero()
+
     while not juego.__juego_finalizado__:
-            juego.turnos()
-            juego.procesarJuego()
-            print(CLEAR)
-            juego.__tablero__.mostrar_tablero()
-    print(CLEAR)        
-    juego.__tablero__.mostrar_tablero()               
-    #print(f"El ganador es {juego.ganador}")
-    juego.mostrarGanador()
-    fin=time.time()
-    total=fin-inicio
-    print(f"Tiempo total de partida: {round(total,2)} segundos")
+        print(CLEAR)
+        juego.tablero.mostrar_tablero()
+        juego.turnos()
+        juego.determinarGanador()
+
+        if juego.__juego_finalizado__:
+            break  
+
+        posicion_actual, posicion_final = juego.ProcesarInput()
+        if not juego.moverPieza(posicion_actual, posicion_final):
+            continue
+
+        print(CLEAR)
+
+    print(CLEAR)
+    juego.tablero.mostrar_tablero()               
+    fin = time.time()
+    total = fin - inicio
+    print(f"El ganador es {juego.__ganador__}")
+    print(f"Tiempo total de partida: {round(total/60, 2)} minutos")
+
 if __name__ == '__main__':
     main()
