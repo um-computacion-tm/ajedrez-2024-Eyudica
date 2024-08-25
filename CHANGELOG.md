@@ -1,14 +1,11 @@
 # CHANGELOG
 ## [1.2.1] - 2024-08-19
-<<<<<<< HEAD
 ### Actualizar 
 - Archivo `chess/piezas.py`
 - Archivo `tests/test_juego.py`
-=======
 ### Actualizar
 - Archivo `test/test_interfaz.py`
 - Archivo `chess/piezas.py`
->>>>>>> 21546ad660191d52356b8d31acbe277637f542a6
 ## [1.2.0] - 2024-08-17
 ### Arreglar/Actualizar
 - Archivo `chess/interfaz.py`
