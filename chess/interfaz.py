@@ -8,7 +8,7 @@ NEGRO='Negro'
 class Juego:
     def __init__(self,mostrar_tablero=True):
         #self.__tablero__=Tablero()
-        self.tablero=Tablero()
+        self.__tablero__=Tablero()
         self.__turno_actual__=BLANCO
         self.__turno_color_inicial__=BLANCO
         self.__turno_color_segundo__=NEGRO
@@ -23,30 +23,30 @@ class Juego:
         #Blancas
         
         self.__piezas__.extend([
-            Peon(self.__turno_color_inicial__, (1,2)), Peon(self.__turno_color_inicial__, (2,2)),
-        #     Peon(self.__turno_color_inicial__, "c2"), Peon(self.__turno_color_inicial__, "d2"),
-        #     Peon(self.__turno_color_inicial__, "e2"), Peon(self.__turno_color_inicial__, "f2"),
-        #     Peon(self.__turno_color_inicial__, "g2"), Peon(self.__turno_color_inicial__, "h2"),
-            Torre(self.__turno_color_inicial__, (1,1))#, Torre(self.__turno_color_inicial__, "h1"),
-        #     Caballo(self.__turno_color_inicial__, "b1"), Caballo(self.__turno_color_inicial__, "g1"),
-        #     Alfil(self.__turno_color_inicial__, "c1"), Alfil(self.__turno_color_inicial__, "f1"),            
-            # Dama(self.__turno_color_inicial__, "e1"), Rey(self.__turno_color_inicial__, "d1")
+            Peon(self.__turno_color_inicial__, (0,1)), Peon(self.__turno_color_inicial__, (1,1)),
+            Peon(self.__turno_color_inicial__, (2,1)), Peon(self.__turno_color_inicial__, (3,1)),
+            Peon(self.__turno_color_inicial__, (4,1)), Peon(self.__turno_color_inicial__, (5,1)),
+            Peon(self.__turno_color_inicial__, (6,1)), Peon(self.__turno_color_inicial__, (7,1)),
+            Torre(self.__turno_color_inicial__, (0,0)), Torre(self.__turno_color_inicial__, (7,0)),
+            Caballo(self.__turno_color_inicial__, (1,0)), Caballo(self.__turno_color_inicial__, (6,0)),
+            Alfil(self.__turno_color_inicial__, (2,0)), Alfil(self.__turno_color_inicial__, (5,0)),            
+            Dama(self.__turno_color_inicial__, (3,0)), Rey(self.__turno_color_inicial__, (4,0))
        ])
 
         self.__piezas__.extend([
-            # Peon(self.__turno_color_segundo__, (0,6)), Peon(self.__turno_color_segundo__, (1,6)),
-            # Peon(self.__turno_color_segundo__, "c7"), Peon(self.__turno_color_segundo__, "d7"),
-            # Peon(self.__turno_color_segundo__, "e7"), Peon(self.__turno_color_segundo__, "f7"),
-            # Peon(self.__turno_color_segundo__, "g7"), Peon(self.__turno_color_segundo__, "h7"),
-            # Torre(self.__turno_color_segundo__, "a8"), Torre(self.__turno_color_segundo__, "h8"),
-            # Caballo(self.__turno_color_segundo__, "b8"), Caballo(self.__turno_color_segundo__, "g8"),
-           # Alfil(self.__turno_color_segundo__, (1,1)),#, Alfil(self.__turno_color_segundo__, "f8"),            
-            Dama(self.__turno_color_segundo__, (7,7))#, Rey(self.__turno_color_segundo__, "d8")
+            Peon(self.__turno_color_segundo__, (0,6)), Peon(self.__turno_color_segundo__, (1,6)),
+            Peon(self.__turno_color_segundo__, (2,6)), Peon(self.__turno_color_segundo__, (3,6)),
+            Peon(self.__turno_color_segundo__, (4,6)), Peon(self.__turno_color_segundo__, (5,6)), 
+            Peon(self.__turno_color_segundo__, (6,6)), Peon(self.__turno_color_segundo__, (7,6)),
+            Torre(self.__turno_color_segundo__, (0,7)), Torre(self.__turno_color_segundo__, (7,7)),
+            Caballo(self.__turno_color_segundo__, (1,7)), Caballo(self.__turno_color_segundo__, (6,7)),
+            Alfil(self.__turno_color_segundo__, (2,7)), Alfil(self.__turno_color_segundo__, (5,7)),            
+            Dama(self.__turno_color_segundo__, (3,7)), Rey(self.__turno_color_segundo__, (4,7))
             
         ])
     def agregarPiezasEnTablero(self):
         for pieza in self.__piezas__:
-            self.tablero.insertarEnTableroEnInicializacion(pieza)
+            self.__tablero__.insertarEnTableroEnInicializacion(pieza)
    
     def determinarPieza(self, posicion): #se le pasa como parametro de la posicion de la pieza que queremos conocer y retorna la pieza en el caso de que la posicion sea correcta
         columna,fila=posicion
@@ -61,9 +61,9 @@ class Juego:
         columna_inicial, fila_inicial = posicion_inicial
         columna_final, fila_final = nueva_posicion
         camino = pieza.checkMovimiento(nueva_posicion)
-        if camino and self.tablero.checkCamino(pieza, camino):
+        if camino and self.__tablero__.checkCamino(pieza, camino):
             # Mover la pieza en el tablero
-            self.tablero.agregarEnTablero(pieza, nueva_posicion)
+            self.__tablero__.agregarEnTablero(pieza, nueva_posicion)
             self.__contador_jugadas__+=1
             if isinstance(pieza, Peon):
                 pieza.__movido__=True
@@ -75,6 +75,11 @@ class Juego:
         coordenadas = None
         while coordenadas is None:
             coordenadas = input("Ingresar movimiento: ").replace(" ","").strip()
+            if coordenadas=="exit":
+                self.__juego_finalizado__=True
+                return False
+                
+
             if self.excepcion(coordenadas):
                 primerLetra = posiciones[coordenadas[0].lower()]
                 primerNumero = int(coordenadas[1]) - 1
@@ -102,7 +107,7 @@ class Juego:
     
         for x in range(8):
             for y in range(8):
-                pieza = self.tablero.__tablero__[x][y]
+                pieza = self.__tablero__.__tablero__[x][y]
                 if pieza in simbolos[BLANCO].values():
                     piezas_blanco = True
                 elif pieza in simbolos[NEGRO].values():

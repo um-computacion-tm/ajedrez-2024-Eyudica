@@ -5,7 +5,7 @@ CLEAR = "\033[H\033[J"
 
 def main():
     juego = Juego()
-    tablero = Tablero()
+   # tablero = Tablero()
     inicio = time.time()
 
     juego.inicializarPiezas()
@@ -13,21 +13,23 @@ def main():
 
     while not juego.__juego_finalizado__:
         print(CLEAR)
-        juego.tablero.mostrar_tablero()
+        juego.__tablero__.mostrar_tablero()
         juego.turnos()
         juego.determinarGanador()
 
         if juego.__juego_finalizado__:
-            break  
-
-        posicion_actual, posicion_final = juego.ProcesarInput()
+            break
+        posiciones=juego.ProcesarInput()
+        if not posiciones:
+            break
+        posicion_actual, posicion_final = posiciones
         if not juego.moverPieza(posicion_actual, posicion_final):
             continue
-
-        print(CLEAR)
+          
+        print(CLEAR)    
 
     print(CLEAR)
-    juego.tablero.mostrar_tablero()               
+    juego.__tablero__.mostrar_tablero()               
     fin = time.time()
     total = fin - inicio
     print(f"El ganador es {juego.__ganador__}")
