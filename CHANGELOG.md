@@ -1,4 +1,8 @@
 # CHANGELOG
+## [2.0.1] - 2024-08-26
+### Actualizar
+- Archivo `chess/main.py`
+- Archivo `chess/interfaz.py`
 ## [2.0.0] - 2024-08-24
 ### Arreglar/refactorizar
 - Archivo `chess/interfaz.py`
