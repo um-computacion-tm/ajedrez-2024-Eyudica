@@ -15,11 +15,11 @@
     python3 chess/main.py
     ```
     **Uso sugerido para ejecutar el juego:**
-    ```sh
+    ```shc
     rlwrap python3 chess/main.py
     ```
     [rlwrap](https://github.com/hanslub42/rlwrap)
-2. Ingreso de coordenaas:
+2. Ingreso de coordenadas:
 
     
    
