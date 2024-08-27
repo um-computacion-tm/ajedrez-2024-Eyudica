@@ -14,18 +14,14 @@
     ```sh
     python3 chess/main.py
     ```
+2. Ingreso de coordenaas:
+
     **Uso sugerido para ejecutar el juego:**
-    - `Usar rlwrap para tener una mejor movilidad a la hora de usar el programa`
     ```sh
     rlwrap python3 chess/main.py
     ```
     -[rlwrap](https://github.com/hanslub42/rlwrap)
-    ### Instalación de rlwrap en Debian/Arch
-    ```sh
-    sudo apt install rlwrap
-    sudo pacmans -S rlwrap
-    ```.
-    ```
+   
 # Circle Ci
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/um-computacion-tm/ajedrez-2024-Eyudica/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/um-computacion-tm/ajedrez-2024-Eyudica/tree/main)
