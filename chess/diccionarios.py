@@ -1,7 +1,7 @@
 BLANCO='Blanco'
 NEGRO='Negro'
 diccionarioSimbolos = {
-    BLANCO: {
+    NEGRO: {
         'Peon': "♙",
         'Torre': "♖",
         'Caballo': "♘",
@@ -9,7 +9,7 @@ diccionarioSimbolos = {
         'Rey': "♔",
         'Dama': "♕"
     },
-    NEGRO: {
+    BLANCO: {
         'Peon': "♟",
         'Torre': "♜",
         'Caballo': "♞",

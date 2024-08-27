@@ -14,13 +14,14 @@
     ```sh
     python3 chess/main.py
     ```
-2. Ingreso de coordenaas:
-
     **Uso sugerido para ejecutar el juego:**
     ```sh
     rlwrap python3 chess/main.py
     ```
-    -[rlwrap](https://github.com/hanslub42/rlwrap)
+    [rlwrap](https://github.com/hanslub42/rlwrap)
+2. Ingreso de coordenaas:
+
+    
    
 # Circle Ci
 
