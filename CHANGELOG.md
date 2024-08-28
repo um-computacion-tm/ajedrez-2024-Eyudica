@@ -1,4 +1,7 @@
 # CHANGELOG
+## [2.0.3] - 2024-08-28
+### Arreglar
+- Archivo `chess/tablero.py`
 ## [2.0.2] - 2024-08-27
 ### Arreglar
 - Archivo `chess/piezas.py`
