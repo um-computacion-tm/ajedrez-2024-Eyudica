@@ -23,10 +23,10 @@ class Juego:
         #Blancas
         
         self.__piezas__.extend([
-            # Peon(self.__turno_color_inicial__, (0,1)), Peon(self.__turno_color_inicial__, (1,1)),
-            # Peon(self.__turno_color_inicial__, (2,1)), Peon(self.__turno_color_inicial__, (3,1)),
-            # Peon(self.__turno_color_inicial__, (4,1)), Peon(self.__turno_color_inicial__, (5,1)),
-            # Peon(self.__turno_color_inicial__, (6,1)), Peon(self.__turno_color_inicial__, (7,1)),
+            Peon(self.__turno_color_inicial__, (0,1)), Peon(self.__turno_color_inicial__, (1,1)),
+            Peon(self.__turno_color_inicial__, (2,1)), Peon(self.__turno_color_inicial__, (3,1)),
+            Peon(self.__turno_color_inicial__, (4,1)), Peon(self.__turno_color_inicial__, (5,1)),
+            Peon(self.__turno_color_inicial__, (6,1)), Peon(self.__turno_color_inicial__, (7,1)),
             Torre(self.__turno_color_inicial__, (0,0)), Torre(self.__turno_color_inicial__, (7,0)),
             Caballo(self.__turno_color_inicial__, (1,0)), Caballo(self.__turno_color_inicial__, (6,0)),
             Alfil(self.__turno_color_inicial__, (2,0)), Alfil(self.__turno_color_inicial__, (5,0)),            
@@ -35,13 +35,13 @@ class Juego:
 
         self.__piezas__.extend([
             Peon(self.__turno_color_segundo__, (0,6)), Peon(self.__turno_color_segundo__, (1,6)),
-            # Peon(self.__turno_color_segundo__, (2,6)), Peon(self.__turno_color_segundo__, (3,6)),
-            # Peon(self.__turno_color_segundo__, (4,6)), Peon(self.__turno_color_segundo__, (5,6)), 
-            # Peon(self.__turno_color_segundo__, (6,6)), Peon(self.__turno_color_segundo__, (7,6)),
-            # Torre(self.__turno_color_segundo__, (0,7)), Torre(self.__turno_color_segundo__, (7,7)),
-            # Caballo(self.__turno_color_segundo__, (1,7)), Caballo(self.__turno_color_segundo__, (6,7)),
-            # Alfil(self.__turno_color_segundo__, (2,7)), Alfil(self.__turno_color_segundo__, (5,7)),            
-            # Dama(self.__turno_color_segundo__, (3,7)), Rey(self.__turno_color_segundo__, (4,7))
+            Peon(self.__turno_color_segundo__, (2,6)), Peon(self.__turno_color_segundo__, (3,6)),
+            Peon(self.__turno_color_segundo__, (4,6)), Peon(self.__turno_color_segundo__, (5,6)), 
+            Peon(self.__turno_color_segundo__, (6,6)), Peon(self.__turno_color_segundo__, (7,6)),
+            Torre(self.__turno_color_segundo__, (0,7)), Torre(self.__turno_color_segundo__, (7,7)),
+            Caballo(self.__turno_color_segundo__, (1,7)), Caballo(self.__turno_color_segundo__, (6,7)),
+            Alfil(self.__turno_color_segundo__, (2,7)), Alfil(self.__turno_color_segundo__, (5,7)),            
+            Dama(self.__turno_color_segundo__, (3,7)), Rey(self.__turno_color_segundo__, (4,7))
             
         ])
     def agregarPiezasEnTablero(self):
