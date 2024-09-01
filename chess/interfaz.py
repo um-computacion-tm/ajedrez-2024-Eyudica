@@ -1,7 +1,13 @@
-from piezas import Torre, Caballo, Alfil, Dama, Rey, Peon, BLANCO, NEGRO
-from tablero import Tablero
-from diccionarios import diccionarioSimbolos as simbolos
-from diccionarios import diccionarioFilas as posiciones
+from chess.piezas.piezas import *
+from chess.piezas.peon import Peon
+from chess.piezas.torre import Torre
+from chess.piezas.alfil import Alfil
+from chess.piezas.dama import Dama
+from chess.piezas.rey import Rey
+from chess.piezas.caballo import Caballo
+from chess.tablero import Tablero
+from chess.diccionarios import diccionarioSimbolos as simbolos
+from chess.diccionarios import diccionarioFilas as posiciones
 
 BLANCO='Blanco'
 NEGRO='Negro'
@@ -112,20 +118,18 @@ class Juego:
             return False
 
     def determinarGanador(self):#itera sobre todas las posiciones del tablero, y si no hay piezas de un color, se da como ganador el otro color
-        piezas_blanco = False
-        piezas_negro = False
+        rey_blanco = False
+        rey_negro = False
     
-        for x in range(8):
-            for y in range(8):
-                pieza = self.__tablero__.__tablero__[x][y]
-                if pieza in simbolos[BLANCO].values():
-                    piezas_blanco = True
-                elif pieza in simbolos[NEGRO].values():
-                    piezas_negro = True
-                
-        if not piezas_negro:
+        for rey in self.__piezas__:
+            if isinstance(rey, Rey):
+                if rey.color == BLANCO:
+                    rey_blanco = True
+                elif rey.color == NEGRO:
+                    rey_negro = True
+        if not rey_negro:
             return BLANCO   
-        elif not piezas_blanco:
+        elif not rey_blanco:
             return NEGRO
         return None
     def turnos(self): #Si contador_jugadas es par el turno es de blancas, sino de negras y llama a procesarJuego
