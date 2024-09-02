@@ -1,5 +1,11 @@
-from piezas import Torre, Caballo, Alfil, Dama, Rey, Peon, BLANCO, NEGRO
-from diccionarios import diccionarioSimbolos as simbolos
+from chess.piezas.piezas import *
+from chess.piezas.peon import Peon
+from chess.piezas.torre import Torre
+from chess.piezas.alfil import Alfil
+from chess.piezas.dama import Dama
+from chess.piezas.rey import Rey
+from chess.piezas.caballo import Caballo
+from chess.diccionarios import diccionarioSimbolos as simbolos
 
 BLANCO='Blanco'
 NEGRO='Negro'
