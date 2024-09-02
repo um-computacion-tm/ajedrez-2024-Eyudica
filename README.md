@@ -23,7 +23,7 @@
 ## Coordenadas de pieza  Coordenadas de destino (Ejemplo: e2 e4)
 ### Video ejemplo
 
-[![Ver el video](https://img.youtube.com/vi/NKU50TWpWlo/maxresdefault.jpg)](https://youtube.com/shorts/NKU50TWpWlo?feature=share)
+![Ver video](demo.mp4)
 
     
    
