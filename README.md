@@ -20,7 +20,10 @@
     ```
     [rlwrap](https://github.com/hanslub42/rlwrap)
 2. Ingreso de coordenadas:
+## Coordenadas de pieza  Coordenadas de destino (Ejemplo: e2 e4)
+### Video ejemplo
 
+[Video ejemplo](https://youtube.com/shorts/NKU50TWpWlo?feature=share)
     
    
 # Circle Ci
