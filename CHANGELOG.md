@@ -1,4 +1,20 @@
 # CHANGELOG
+## [2.0.6] - 2024-09-08
+### Agregar
+- Archivo `chess/piezas/peon.py`
+- Archivo `chess/piezas/piezas.py`
+- Archivo `test/test_piezas.py`
+- Archivo `test/test_juego.py`
+- Archivo `test/test_tablero.py`
+- Archivo `chess/piezas/rey.py`
+- Archivo `chess/piezas/torre.py`
+##[2.0.5] - 2024-09-04
+### Agregar
+- Archivo `chess/piezas/caballo.py`
+## [2.0.4] - 2024-09-03
+### Agregar
+- Archivo `chess/piezas/alfil.py`
+- Archivo `chess/piezas/dama.py`
 ## [2.0.3] - 2024-08-28
 ### Arreglar
 - Archivo `chess/tablero.py`
