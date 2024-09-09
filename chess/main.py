@@ -12,7 +12,7 @@ def main():
     juego.agregarPiezasEnTablero()
 
     while not juego.__juego_finalizado__:
-        print(CLEAR)
+	#print(CLEAR)
         juego.__tablero__.mostrar_tablero()
         juego.turnos()
         juego.determinarGanador()
