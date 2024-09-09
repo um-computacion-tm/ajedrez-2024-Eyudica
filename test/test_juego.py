@@ -1,78 +1,96 @@
 import unittest
 from unittest.mock import patch
-from chess.interfaz import Juego, BLANCO, NEGRO
+from chess.piezas.piezas import *
+from chess.piezas.peon import Peon
+from chess.piezas.torre import Torre
+from chess.piezas.alfil import Alfil
+from chess.piezas.dama import Dama
+from chess.piezas.rey import Rey
+from chess.piezas.caballo import Caballo
+from chess.tablero import Tablero
 from chess.diccionarios import diccionarioSimbolos as simbolos
+from chess.diccionarios import diccionarioFilas as posiciones
+from chess.interfaz import Juego
+
 class TestJuego(unittest.TestCase):
 
     def setUp(self):
-        self.__juego__ = Juego(mostrar_tablero=False)
-        self.__tablero__=self.__juego__.__tablero__
-    #testea que el juego inicia correctamente, que el turno actual es el de blanco y que hayan 32 piezas
-    def test_inicio(self):
-        self.assertEqual(self.__juego__.__turno_actual__, BLANCO)
-        self.assertEqual(len(self.__juego__.__piezas__), 32)
-        self.assertFalse(self.__juego__.__juego_finalizado__)
-    #testea que haya una pieza en la posicion e2 y que sea un peon blanco
+        self.juego = Juego(mostrar_tablero=False)
+        self.juego.inicializarPiezas()
+        self.juego.agregarPiezasEnTablero()
+        self.piezas = self.juego.__piezas__
+
+    def test_piezas_iniciales(self):
+        self.assertEqual(len(self.piezas), 32)
+
     def test_determinar_pieza(self):
-        pieza = self.__juego__.determinarPieza("e2")
-        self.assertIsNotNone(pieza)
+        pieza = self.juego.determinarPieza((0, 1))
+        self.assertIsInstance(pieza, Peon)
         self.assertEqual(pieza.color, BLANCO)
-        self.assertEqual(pieza.__class__.__name__, "Peon")
-    #simula un movmiento y se fija que el turno sea el blanco 
-    @patch('builtins.input', return_value="a2 b2")
-    def test_turno_blanco(self, mock_input):
-        self.__juego__.__contador_jugadas__ = 0
-        self.__juego__.turnos()
-        self.assertEqual(self.__juego__.__turno_actual__, BLANCO)
-    #simula un movmiento y se fija que el turno sea el negro
-    @patch('builtins.input', return_value="h7 h6")
-    def test_turno_negro(self, mock_input):
-        self.__juego__.__contador_jugadas__ = 1
-        self.__juego__.turnos()
-        self.assertEqual(self.__juego__.__turno_actual__, NEGRO)
-    #se fija que determinar ganador retorne None, porque no hay ganador todavia
-    def test_determinar_ganador_sin_ganador_momentaneamente(self):
-        resultado = self.__juego__.determinarGanador()
-        self.assertIsNone(resultado)
-    #testea un inteno de mover una pieza que no existe
-    def test_moverPieza_sin_pieza(self):
-        self.__juego__.__contador_jugadas__ = 0
-        resultado = self.__juego__.moverPieza("a3", "a4")
-        self.assertFalse(resultado)
-    #testea un intento de mover una pieza fuera de los limites del tablero
-    def test_moverPieza_fuera_de_limites(self):
-        self.__juego__.__contador_jugadas__ = 0
-        resultado = self.__juego__.moverPieza("e2", "e9") 
-        self.assertFalse(resultado)
-    #testea un intento de mover una pieza desde una posicion que no es valida
-    def test_mover_pieza_invalida(self):
-        resultado = self.__juego__.moverPieza("a3", "a4")
-        self.assertFalse(resultado)
-    #simula un movimiento y se fija que el contador de jugadas haya aumentado a 1
+        pieza = self.juego.determinarPieza((4, 0))
+        self.assertIsInstance(pieza, Rey)
+        self.assertEqual(pieza.color, BLANCO)
+        pieza = self.juego.determinarPieza((0, 6))
+        self.assertFalse(pieza)
 
+    def test_determinar_pieza_destino(self):
+        pieza = Peon(NEGRO, (1, 2))
+        self.juego.__piezas__.append(pieza)
+        pieza_encontrada = self.juego.determinarPiezaDestino((1, 2))
+        self.assertIsNotNone(pieza_encontrada)
+        self.assertEqual(pieza_encontrada.color, NEGRO)
+        pieza_encontrada = self.juego.determinarPiezaDestino((3, 3))
+        self.assertFalse(pieza_encontrada)
 
-    @patch('builtins.input', return_value="e2 e4") #prueba que contador de jugadas sea 0 
-    def test_turnos_juego_no_finalizado(self, mock_input):
-        self.__juego__.__juego_finalizado__ = False
-        self.__juego__.turnos()
-        self.assertEqual(self.__juego__.__contador_jugadas__, 0)
-    @patch('builtins.input', return_value="e2 e4") #prueba que obtenerCoordenadas funcione correctamente
-    def test_turnos_juego_finalizado(self, mock_input):
-        self.assertEqual(self.__juego__.obtenerCoordenadas(), ("e2", "e4"))
-    def test_determinar_ganador_negro(self): #simula que no hay piezas de blanco y se fija que el ganador es negro
-        for i in range(8):
-            for x in range(2):
-                self.__tablero__.__tablero__[i][x]=" "
-        self.assertTrue(self.__juego__.determinarGanador())
-        self.assertEqual(self.__juego__.__ganador__, NEGRO)
-    def test_determinar_ganador_blanco(self): #simula que no hay piezas de negro y se fija que el ganador es blanco
-        for i in range(8):
-            for x in range(6,8):
-                self.__tablero__.__tablero__[i][x]=" "
-        self.__tablero__.__tablero__[0][0]="♙"
-        self.assertTrue(self.__juego__.determinarGanador())
-        self.assertEqual(self.__juego__.__ganador__, BLANCO)
+    def test_mover_pieza(self):
+        pieza = Peon(BLANCO, (0, 1))
+        self.juego.__piezas__.append(pieza)
+        resultado = self.juego.moverPieza((0, 1), (0, 2))
+        self.assertTrue(resultado)
+        self.assertEqual(pieza.columna, 0)
+        resultado = self.juego.moverPieza((0, 2), (0, 6))
+        self.assertFalse(resultado)
 
+    def test_excepcion(self):
+        self.assertTrue(self.juego.excepcion("a1 b2"))
+        self.assertFalse(self.juego.excepcion("a2 a9"))
+        self.assertFalse(self.juego.excepcion("a1 b"))
+        self.assertFalse(self.juego.excepcion("a1 b20"))
+        self.assertFalse(self.juego.excepcion("asdfasfdsaf3b6wq6baeba4*%)&($&%^($&))"))
+
+    def test_determinar_ganador(self):
+        self.assertIsNone(self.juego.determinarGanador())
+        self.juego.__piezas__ = [pieza for pieza in self.juego.__piezas__ if pieza.color == BLANCO]
+        self.assertEqual(self.juego.determinarGanador(), BLANCO)
+
+    def test_turnos(self):
+        self.juego.turnos()
+        self.assertEqual(self.juego.__turno_actual__, BLANCO)
+        self.juego.__contador_jugadas__ = 1
+        self.juego.turnos()
+        self.assertEqual(self.juego.__turno_actual__, NEGRO)
+
+    @patch('builtins.input', side_effect=['a2a3'])
+    def test_procesar_input_valido(self, mock_input):
+        resultado = self.juego.ProcesarInput()
+        self.assertEqual(resultado, ((0, 1), (0, 2)))
+        self.assertFalse(self.juego.__juego_finalizado__)
+
+    @patch('builtins.input', side_effect=['exit'])
+    def test_procesar_input_exit(self, mock_input):
+        resultado = self.juego.ProcesarInput()
+        self.assertFalse(resultado)
+        self.assertTrue(self.juego.__juego_finalizado__)
+    def test_no_pieza_en_posicion_inicial(self):
+        resultado = self.juego.moverPieza((5, 5), (5, 6))
+        self.assertFalse(resultado)
+
+    def test_pieza_en_posicion_inicial(self):
+        pieza = Peon(BLANCO, (0, 1))
+        self.juego.__piezas__.append(pieza)
+
+        resultado = self.juego.moverPieza((0, 1), (0, 2))
+        self.assertTrue(resultado)
 
 if __name__ == '__main__':
     unittest.main()

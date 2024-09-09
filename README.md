@@ -20,6 +20,10 @@
     ```
     [rlwrap](https://github.com/hanslub42/rlwrap)
 2. Ingreso de coordenadas:
+ Coordenadas de pieza-Coordenadas de destino (Ejemplo: e2 e4)
+### Video de ejemplo
+
+https://github.com/user-attachments/assets/88b1c6e7-82ea-4cb6-a571-c8e3ce12841e
 
     
    

@@ -1,5 +1,11 @@
-from piezas import Torre, Caballo, Alfil, Dama, Rey, Peon, BLANCO, NEGRO
-from diccionarios import diccionarioSimbolos as simbolos
+from chess.piezas.piezas import *
+from chess.piezas.peon import Peon
+from chess.piezas.torre import Torre
+from chess.piezas.alfil import Alfil
+from chess.piezas.dama import Dama
+from chess.piezas.rey import Rey
+from chess.piezas.caballo import Caballo
+from chess.diccionarios import diccionarioSimbolos as simbolos
 
 BLANCO='Blanco'
 NEGRO='Negro'
@@ -57,16 +63,21 @@ class Tablero:
             return False
 
     def checkCamino(self, pieza, camino):
+        camino_libre=False
         if isinstance(pieza, Peon):
             if len(camino) == 1:
                 columna, fila = camino[0]
                 avance_lineal = (columna == pieza.columna)
-                return (self.__tablero__[columna][fila]==" ") if avance_lineal else (self.__tablero__[columna][fila] !=" ")
+                if avance_lineal:
+                    camino_libre = (self.__tablero__[columna][fila]==" ")
+                else:
+                    camino_libre = (self.__tablero__[columna][fila] !=" ")
             elif len(camino) == 2:#si el movimiento es recto y esta libre    #para la diagonal
                      
-                return all(self.__tablero__[columna][fila] == " " for columna, fila in camino)
-            return False
+                camino_libre = all(self.__tablero__[columna][fila] == " " for columna, fila in camino)
+            
         elif isinstance(pieza, (Alfil,Dama,Torre)):
-            return all(self.__tablero__[columna][fila] == " " for columna, fila in camino[:-1])
+            camino_libre = all(self.__tablero__[columna][fila] == " " for columna, fila in camino[:-1])
         else:
             return True
+        return camino_libre

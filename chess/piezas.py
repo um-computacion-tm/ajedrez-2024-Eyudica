@@ -49,8 +49,8 @@ class Piezas():
     def establecerPosicion(self, nueva_posicion): #Recibe como parametro las coordenadas de la nueva posicion de la pieza, convierte el primer valor de las coordenadas(columnas) a letras como el estandar usado en el ajedrez
         self.columna_anterior, self.fila_anterior = self.__posicion__
         self.__posicion__=nueva_posicion
-    #def __str__(self):
-    #    return f'La pieza es {self.__tipo__} con color {self.__color__} en la posicion {(self.columna,self.fila)} y el simbolo es {self.__simbolo__}'
+    def __str__(self):
+       return f'La pieza es {self.__tipo__} con color {self.__color__} en la posicion {(self.columna,self.fila)} y el simbolo es {self.__simbolo__}'
 
 class Peon(Piezas):
     def __init__(self, color, posicion):
