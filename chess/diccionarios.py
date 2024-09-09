@@ -1,5 +1,6 @@
 BLANCO='Blanco'
 NEGRO='Negro'
+#diccionario para los simbolos
 diccionarioSimbolos = {
     NEGRO: {
         'Peon': "♙",
@@ -18,7 +19,7 @@ diccionarioSimbolos = {
         'Dama': "♛"
     }
 }
-
+#diccionario para las coordenadas
 diccionarioFilas={
   "a": 0,
   "b": 1,

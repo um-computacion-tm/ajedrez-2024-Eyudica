@@ -32,10 +32,10 @@ class Tablero:
             print("  +" + "---+" * 8)
         print("  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |")
     
-    def insertarEnTableroEnInicializacion(self,pieza):
+    def insertarEnTableroEnInicializacion(self,pieza):#recibe la pieza como parametro y la inserta en el tablero
         columna,fila=pieza.columna,pieza.fila
         self.__tablero__[columna][fila]=pieza.simbolo
-    def checkearColisiones(self,pieza,nueva_posicion):
+    def checkearColisiones(self,pieza,nueva_posicion):#se fija que no haya piezas en la posicion final a mover, en caso de que haya, se fija en el color, si es del mismo color devuelve false, sino true
         columna_final,fila_final=nueva_posicion
         if self.__tablero__[columna_final][fila_final]==" ":
             return True
@@ -47,7 +47,7 @@ class Tablero:
                     else:
                         return True
 
-    def agregarEnTablero(self, pieza, nueva_posicion):
+    def agregarEnTablero(self, pieza, nueva_posicion): #mueve la pieza en el tablero, se fija que se pueda mover y elimina la pieza de la posicion vieja y la coloca en la nueva.Sino la pieza vuelve a la posicion anterior y devuelve false
         columna_inicial, fila_inicial = (pieza.columna, pieza.fila)
         columna_final, fila_final = nueva_posicion
        # casilla_final_simbolo=self.__tablero__[columna_final][fila_final]
@@ -62,7 +62,7 @@ class Tablero:
             pieza.establecerPosicion((columna_inicial, fila_inicial))
             return False
 
-    def checkCamino(self, pieza, camino):
+    def checkCamino(self, pieza, camino): #metodo para ver si hay piezas interrumpiendo el movimiento de la pieza, en el caso de las piezas que no necesiten esta validacion, devuelve true directamente
         camino_libre=False
         if isinstance(pieza, Peon):
             if len(camino) == 1:

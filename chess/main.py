@@ -1,9 +1,8 @@
-from interfaz import Juego
-from tablero import Tablero
+from chess.interfaz import Juego
 import time
-CLEAR = "\033[H\033[J"
+CLEAR = "\033[H\033[J" # para limpiar la pantalla
 
-def main():
+def main(): #funcion main , mientras que juego_finalizado de juego sea false se ejecuta, sino termina y muestra el tiempo total de partida
     juego = Juego()
    # tablero = Tablero()
     inicio = time.time()

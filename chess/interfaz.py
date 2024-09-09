@@ -11,6 +11,7 @@ from chess.diccionarios import diccionarioFilas as posiciones
 
 BLANCO='Blanco'
 NEGRO='Negro'
+#Clase que establece el flujo del juego
 class Juego:
     def __init__(self,mostrar_tablero=True):
         #self.__tablero__=Tablero()
@@ -38,7 +39,7 @@ class Juego:
             Alfil(self.__turno_color_inicial__, (2,0)), Alfil(self.__turno_color_inicial__, (5,0)),            
             Dama(self.__turno_color_inicial__, (3,0)), Rey(self.__turno_color_inicial__, (4,0))
        ])
-
+        #negras
         self.__piezas__.extend([
             Peon(self.__turno_color_segundo__, (0,6)), Peon(self.__turno_color_segundo__, (1,6)),
             Peon(self.__turno_color_segundo__, (2,6)), Peon(self.__turno_color_segundo__, (3,6)),
@@ -50,24 +51,24 @@ class Juego:
             Dama(self.__turno_color_segundo__, (3,7)), Rey(self.__turno_color_segundo__, (4,7))
             
         ])
-    def agregarPiezasEnTablero(self):
+    def agregarPiezasEnTablero(self): #inserta las piezas de la lista __piezas__en el tablero
         for pieza in self.__piezas__:
             self.__tablero__.insertarEnTableroEnInicializacion(pieza)
    
-    def determinarPieza(self, posicion): #se le pasa como parametro de la posicion de la pieza que queremos conocer y retorna la pieza en el caso de que la posicion sea correcta
+    def determinarPieza(self, posicion): #se le pasa como parametro de la posicion de la pieza que queremos conocer y retorna la pieza en el caso de que la posicion sea correcta, sino devuelve false
         columna,fila=posicion
         for pieza in self.__piezas__:
             if (pieza.columna==columna and pieza.fila==fila) and pieza.color==self.__turno_actual__:
                 return pieza
         return False
-    def determinarPiezaDestino(self,posicion):
+    def determinarPiezaDestino(self,posicion): #devuelve las pieza en la posicion destino, en el caso de que la pieza sea del rival, la devuelve
         columna,fila=posicion
         for pieza in self.__piezas__:
             if (pieza.columna==columna and pieza.fila==fila) and pieza.color!=self.__turno_actual__:
                 return pieza
         return False
-    def moverPieza(self, posicion_inicial, nueva_posicion):
-        pieza = self.determinarPieza(posicion_inicial)
+    def moverPieza(self, posicion_inicial, nueva_posicion): #metodo para mover las piezas, se le pasa como parametro la posicion inicial y la nueva posicion, si la pieza puede moverse, se devuelve true y aumenta el contador de jugadas para que el metodo turnos determine a que color le toca mover, sino false
+        pieza = self.determinarPieza(posicion_inicial)      #en el caso del peon, modifica movido para que no se pueda mover dos posiciones en los proxmimos movimientos.Si la pieza no se puede mover, convierte la posicion de la pieza en la posicion anterior y devuelve false
         if not pieza:
             return False
         columna_inicial, fila_inicial = posicion_inicial
@@ -75,7 +76,6 @@ class Juego:
         pieza_destino=self.determinarPiezaDestino(nueva_posicion)
         camino = pieza.checkMovimiento(nueva_posicion)
         if camino and self.__tablero__.checkCamino(pieza, camino) and self.__tablero__.agregarEnTablero(pieza, nueva_posicion):
-            # Mover la pieza en el tablero
             self.__tablero__.agregarEnTablero(pieza, nueva_posicion)
             if pieza_destino:
                 self.__piezas__.remove(pieza_destino)
@@ -87,15 +87,14 @@ class Juego:
         else:
             pieza.establecerPosicion((columna_inicial, fila_inicial))
             return False
-    def ProcesarInput(self):
+    def ProcesarInput(self):# metodo para ingreso de coordenas, espera las coordenadas iniciales y finales, si son correctas, se devuelve una tupla, sino false, para que no se pueda mover la pieza
         coordenadas = None
         while coordenadas is None:
             coordenadas = input("Ingresar movimiento: ").replace(" ","").strip()
             if coordenadas=="exit":
                 self.__juego_finalizado__=True
                 return False
-                
-
+            
             if self.excepcion(coordenadas):
                 primerLetra = posiciones[coordenadas[0].lower()]
                 primerNumero = int(coordenadas[1]) - 1
@@ -104,7 +103,7 @@ class Juego:
                 return (primerLetra, primerNumero), (segundaLetra, segundoNumero)
             coordenadas = None
 
-    def excepcion(self, coordenadas):
+    def excepcion(self, coordenadas):#metodo para comprobar si las coordenadas son correctas, si no, se devuelve false
         try:
             coord = coordenadas.replace(" ", "").lower()
             if len(coord) != 4:
@@ -112,12 +111,14 @@ class Juego:
             letras, numeros = 'abcdefgh', '12345678'
             if (coord[0] not in letras or coord[2] not in letras or coord[1] not in numeros or coord[3] not in numeros):
                 raise ValueError("Formato incorrecto")
+            if (coord[0] == coord[2] and coord[1] == coord[3]):
+                raise ValueError("No se puede mover a la misma posicion")
             return True
         except ValueError as e:
             print(f"Error: {e}")
             return False
 
-    def determinarGanador(self):#itera sobre todas las posiciones del tablero, y si no hay piezas de un color, se da como ganador el otro color
+    def determinarGanador(self):#itera sobre todas la lista piezas y si no hay un rey de un color, retorna el otro color
         rey_blanco = False
         rey_negro = False
     
@@ -132,7 +133,7 @@ class Juego:
         elif not rey_blanco:
             return NEGRO
         return None
-    def turnos(self): #Si contador_jugadas es par el turno es de blancas, sino de negras y llama a procesarJuego
+    def turnos(self): #Si contador_jugadas es par el turno es de blancas, sino de negras.En el caso de que determinar ganador devuelva un color, el juego termina
         if self.determinarGanador() is not None:
             self.__ganador__=self.determinarGanador()
             #print(f"El jugador {self.__ganador__} ha ganado")
