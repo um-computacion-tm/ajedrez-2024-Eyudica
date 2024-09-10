@@ -138,7 +138,7 @@ class Juego:
             self.__ganador__=self.determinarGanador()
             #print(f"El jugador {self.__ganador__} ha ganado")
             self.__juego_finalizado__ = True
-            
+            return True
         if self.__contador_jugadas__%2==0:
             self.__turno_actual__=BLANCO
         elif self.__contador_jugadas__%2==1:

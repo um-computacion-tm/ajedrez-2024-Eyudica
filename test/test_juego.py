@@ -58,11 +58,16 @@ class TestJuego(unittest.TestCase):
         self.assertFalse(self.juego.excepcion("a1 b20"))
         self.assertFalse(self.juego.excepcion("asdfasfdsaf3b6wq6baeba4*%)&($&%^($&))"))
         self.assertFalse(self.juego.excepcion("a1 a1"))
-
-    def test_determinar_ganador(self):# testea que haya ganador, simulando que solo hay piezas blancas
+    def test_determinar_ganador_blanco(self):# testea que haya ganador, simulando que solo hay piezas blancas
         self.assertIsNone(self.juego.determinarGanador())
         self.juego.__piezas__ = [pieza for pieza in self.juego.__piezas__ if pieza.color == BLANCO]
         self.assertEqual(self.juego.determinarGanador(), BLANCO)
+    def test_determinar_ganador_negro(self):# testea que haya ganador, simulando que solo hay piezas blancas
+        self.assertIsNone(self.juego.determinarGanador())
+        self.juego.__piezas__ = [pieza for pieza in self.juego.__piezas__ if pieza.color == NEGRO]
+        self.assertEqual(self.juego.determinarGanador(), NEGRO)
+        self.assertTrue(self.juego.turnos())
+        
 
     def test_turnos(self):# testea que el turno actual es el de blancas y que el contador de jugadas se incrementa y el turno es el de negras
         self.juego.turnos()
@@ -92,6 +97,9 @@ class TestJuego(unittest.TestCase):
 
         resultado = self.juego.moverPieza((0, 1), (0, 2))
         self.assertTrue(resultado)
+    def determinarGanador(self):# testea que haya ganador, simulando que solo hay piezas blancas
+        self.assertIsNone(self.juego.determinarGanador())
+
 
 if __name__ == '__main__':
     unittest.main()

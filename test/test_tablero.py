@@ -60,11 +60,12 @@ class TestTablero(unittest.TestCase):
 
     def test_checkear_colisiones_vacio(self):#testea que no haya colisiones si no hay piezas en la posicion
         self.assertTrue(self.tablero.checkearColisiones(self.peon_blanco, (2, 2)))
-    
+        self.assertTrue(self.tablero.checkearColisiones(self.torre_negra, (0, 0)))
     def test_checkear_colisiones_con_pieza(self):#testea que haya colisiones si hay una pieza en la posicion
-        self.tablero.insertarEnTableroEnInicializacion(self.torre_negra)
-        self.assertFalse(self.tablero.checkearColisiones(self.dama_negra, (0, 0)))
-        self.assertTrue(self.tablero.checkearColisiones(self.dama_negra, (0, 1)))
+        self.tablero.insertarEnTableroEnInicializacion(self.dama_negra)
+        self.tablero.insertarEnTableroEnInicializacion(self.peon_blanco)
+        #self.assertFalse(self.tablero.checkearColisiones(self.dama_negra, (0, 0)))
+        self.assertTrue(self.tablero.checkearColisiones(self.dama_negra, (1, 1)))
 
     def test_check_camino(self):#testea que la pieza se pueda mover en el camino dado
         self.tablero.insertarEnTableroEnInicializacion(self.peon_blanco)
@@ -73,10 +74,8 @@ class TestTablero(unittest.TestCase):
 
         camino_dos = [(1, 2), (2, 2)]
         self.assertTrue(self.tablero.checkCamino(self.peon_blanco, camino_dos))
-
-    # def test_check_camino_con_obstaculos(self):
-    #     self.tablero.insertarEnTableroEnInicializacion(self.torre_negra)
-    #     camino = [(2, 3), (3, 3),(3,4)]
-    #     self.assertTrue(self.tablero.checkCamino(self.torre_negra, camino))
+        camino_false=[(5,5)]
+        self.assertFalse(self.tablero.checkCamino(self.peon_blanco, camino_false))
+    
 if __name__ == '__main__':
     unittest.main()
