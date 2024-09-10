@@ -1,4 +1,8 @@
 # CHANGELOG
+## [2.0.7] - 2024-09-09
+### Actualizar
+- Archivo `test/test_juego.py`
+- Archivo `test/test_tablero.py`
 ## [2.0.6] - 2024-09-08
 ### Agregar
 - Archivo `chess/piezas/peon.py`
