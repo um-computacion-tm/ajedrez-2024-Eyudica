@@ -7,7 +7,7 @@ WORKDIR /ajedrez-2024-Eyudica
 
 RUN pip install -r requirements.txt
 
-CMD ["sh", "-c", "coverage run -m unittest && coverage report -m && python main.py"]
+CMD ["sh", "-c", "coverage run -m unittest && coverage report -m && python -m chess.main"]
 
 # docker buildx build -t ajedrez-2024-Eyudica .
 # docker run -i ajedrez-2024-Eyudica

@@ -1,11 +1,13 @@
 
 from chess.piezas.piezas import Piezas
-
+#Torre
 class Torre(Piezas):
     def __init__(self, color, posicion):
         super().__init__("Torre", color, posicion)
 
-    def checkMovimiento(self, nueva_posicion):
+    def checkMovimiento(self, nueva_posicion):#metodo para el movimiento de la torre, comprueba que el movimiento sea horizontal o vertical
+                                             #itera sobre las posiciones entre la inicial y la final, y agrega todas estas posiciones a la lista casillas y la retorna para posteriormente verificar si hay una pieza bloqueando en el tablero
+                                            #en el caso de que la casilla seria como devolver false(si el jugador intenta mover la pieza a la posicion actual de la pieza)
         nueva_columna, nueva_fila = nueva_posicion
         casillas = []
         if nueva_columna == self.columna:

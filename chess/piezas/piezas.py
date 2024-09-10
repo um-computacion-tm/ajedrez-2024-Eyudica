@@ -10,6 +10,7 @@ class Piezas():
         self.__simbolo__ = self.obtenerSimbolos()
         self.__columna_anterior__ = self.columna
         self.__fila_anterior__ = self.fila
+    #metodos de acceso a las propiedades de la pieza para no tener que escribir __atributo__ todas la veces en el codigo
     @property 
     def columna(self):
         return self.__posicion__[0]
@@ -46,9 +47,9 @@ class Piezas():
     @columna.setter
     def columna(self, value):
         self.__posicion__ = (value,self.fila)
-    def establecerPosicion(self, nueva_posicion): #Recibe como parametro las coordenadas de la nueva posicion de la pieza, convierte el primer valor de las coordenadas(columnas) a letras como el estandar usado en el ajedrez
+    def establecerPosicion(self, nueva_posicion): #convierte la posicion de la pieza en base de las coordenadas que recibe
         self.columna_anterior, self.fila_anterior = self.__posicion__
         self.__posicion__=nueva_posicion
-    def __str__(self):
+    def __str__(self): # metodo para mostrar informacion del objeto
        return f'La pieza es {self.__tipo__} con color {self.__color__} en la posicion {(self.columna,self.fila)} y el simbolo es {self.__simbolo__}'
 
